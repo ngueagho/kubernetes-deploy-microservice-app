@@ -27,4 +27,4 @@ jobs:
         run: |
             docker push robertolandry/todoappfrontend:latest
             docker push robertolandry/todoappbackend:latest
-            docker push robertolandry/todoappdb:latest
+            docker push robertolandry/todoappdb:latest 
