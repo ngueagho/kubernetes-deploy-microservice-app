@@ -17,9 +17,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: build and tag frontend image 
-        run:  docker build -t robertolandry/todoappfrontend -f ./schedule-management-app/frontend/.
+        run:  docker build -t robertolandry/todoappfrontend -f ./schedule-management-app/frontend/Dockerfile ./schedule-management-app/frontend
       - name: build and tag backend image  
-        run:  docker build -t robertolandry/todoappbackend -f ./schedule-management-app/backend/.
+        run:  docker build -t robertolandry/todoappbackend  -f ./schedule-management-app/backend/Dockerfile ./schedule-management-app/backend
+
       - name: tag db
         run: docker tag robertolandry/todoappdb:latest  postgres:15
 
