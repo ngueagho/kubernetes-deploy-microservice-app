@@ -22,7 +22,9 @@ jobs:
         run:  docker build -t robertolandry/todoappbackend  -f ./schedule-management-app/backend/Dockerfile ./schedule-management-app/backend
 
       - name: tag db
-        run: docker tag robertolandry/todoappdb:latest  postgres:15
+        run: |
+            docker pull postgres:15
+            docker tag  postgres:15 robertolandry/todoappdb:latest 
 
       - name: push all images on dockerhub 
         run: |
