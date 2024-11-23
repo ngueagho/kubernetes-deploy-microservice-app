@@ -1,18 +1,41 @@
-# Utiliser une image officielle Node.js
-FROM node:18-alpine
+# # Build stage
+# FROM node:18 AS build
+# WORKDIR /app
+# COPY ./src ./src
+# COPY package*.json ./
+# RUN npm install
+# RUN npm run build
 
-# Définir le répertoire de travail
+# # Production stage
+# FROM nginx:stable
+# COPY --from=build /app/build /usr/share/nginx/html
+# EXPOSE 80
+# CMD ["nginx", "-g", "daemon off;"]
+
+
+# Étape 1 : Construction avec Node.js
+FROM node:18 AS build
 WORKDIR /app
 
-# Copier package.json et installer les dépendances
-COPY package.json ./
+# Copier les fichiers package.json et package-lock.json pour installer les dépendances
+COPY package*.json ./
 RUN npm install
 
-# Copier le code de l'application
-COPY . .
+# Copier le dossier public et src dans l'image
+COPY ./public ./public
+COPY ./src ./src
 
-# Exposer le port 3000
-EXPOSE 3000
+# Construire l'application React
+RUN npm run build
 
-# Commande pour démarrer l'application
-CMD ["npm", "start"]
+# Étape 2 : Serveur Nginx pour servir l'application
+FROM nginx:stable
+# Copier le build généré dans le dossier par défaut de Nginx
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Exposer le port 80 pour servir l'application
+EXPOSE 80
+
+# Lancer Nginx
+CMD ["nginx", "-g", "daemon off;"]
+

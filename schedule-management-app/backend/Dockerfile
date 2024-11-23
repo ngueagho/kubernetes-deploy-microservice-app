@@ -1,18 +1,7 @@
-# Utiliser une image officielle Python
-FROM python:3.9-slim
-
-# Définir le répertoire de travail
+FROM node:18
 WORKDIR /app
-
-# Copier les dépendances et les installer
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copier le code de l'application
+COPY package*.json ./
+RUN npm install
 COPY . .
-
-# Exposer le port 8000
-EXPOSE 8000
-
-# Commande pour démarrer l'application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 5000
+CMD ["npm", "start"]
