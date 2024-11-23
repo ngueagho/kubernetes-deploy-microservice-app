@@ -1,0 +1,30 @@
+on: 
+  push:
+    branches: [main]
+
+jobs:
+  tag-build-and-push-image:
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: clone the code 
+        uses:  actions/checkout@v3
+    
+      - name: login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: build and tag frontend image 
+        run:  docker build -t robertolandry/todoappfrontend -f ./schedule-management-app/frontend/.
+      - name: build and tag backend image  
+        run:  docker build -t robertolandry/todoappbackend -f ./schedule-management-app/backend/.
+      - name: tag db
+        run: docker tag robertolandry/todoappdb:latest  postgres:15
+
+      - name: push all images on dockerhub 
+        run: |
+            docker push robertolandry/todoappfrontend:latest
+            docker push robertolandry/todoappbackend:latest
+            docker push robertolandry/todoappdb:latest

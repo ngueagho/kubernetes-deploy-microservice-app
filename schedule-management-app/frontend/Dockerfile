@@ -33,6 +33,8 @@ FROM nginx:stable
 # Copier le build généré dans le dossier par défaut de Nginx
 COPY --from=build /app/build /usr/share/nginx/html
 
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
 # Exposer le port 80 pour servir l'application
 EXPOSE 80
 
