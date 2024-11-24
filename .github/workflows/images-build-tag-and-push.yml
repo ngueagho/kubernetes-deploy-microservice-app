@@ -23,8 +23,8 @@ jobs:
 
       - name: tag db
         run: |
-            docker pull postgres:15
-            docker tag  postgres:15 robertolandry/todoappdb:latest 
+            docker pull postgres:15-alpine
+            docker tag  postgres:15-alpine robertolandry/todoappdb:latest 
 
       - name: push all images on dockerhub 
         run: |
