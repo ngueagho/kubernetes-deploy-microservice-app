@@ -18,10 +18,12 @@ jobs:
 
       - name: build and tag frontend image 
         run:  docker build -t robertolandry/todoappfrontend -f ./schedule-management-app/frontend/Dockerfile ./schedule-management-app/frontend
+
       - name: build and tag backend image  
         run:  docker build -t robertolandry/todoappbackend  -f ./schedule-management-app/backend/Dockerfile ./schedule-management-app/backend
+
       - name: build and tag db image  
-              run:  docker build -t robertolandry/todoappdb -f ./schedule-management-app/db/Dockerfile ./schedule-management-app/db
+        run:  docker build -t robertolandry/todoappdb -f ./schedule-management-app/db/Dockerfile ./schedule-management-app/db
 
       # - name: tag db
       #   run: |
