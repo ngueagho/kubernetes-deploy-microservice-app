@@ -1,6 +1,6 @@
 on: 
   push:
-    branches: [maino]
+    branches: [main]
 
 jobs:
   tag-build-and-push-image:
